@@ -1,3 +1,4 @@
+// types
 export type LayoutType = "card" | "fullscreen" | "specs";
 
 export type Product = {
@@ -13,6 +14,21 @@ export type Product = {
   variants?: { name: string; options: string[] }[];
   charms?: string[];
 };
+
+export type Category = {
+  slug: string;
+  name: string;
+  description: string;
+};
+
+// داتا مؤقتة
+export const categories: Category[] = [
+  { slug: "necklaces", name: "Necklaces", description: "Beautiful necklaces" },
+  { slug: "bracelets", name: "Bracelets", description: "Handmade bracelets" },
+  { slug: "rings", name: "Rings", description: "Stylish rings" },
+  { slug: "shoes", name: "Shoes", description: "All kinds of shoes" },
+  { slug: "bags", name: "Bags", description: "Stylish bags" },
+];
 
 export const products: Product[] = [
   {
@@ -58,22 +74,44 @@ export const products: Product[] = [
     variants: [
       { name: "Size", options: ["5", "6", "7", "8", "9"] }
     ]
+  },
+  {
+    id: "4",
+    slug: "nike-air",
+    name: "Nike Air",
+    price: 2000,
+    images: ["/nike.jpg"],
+    category: "shoes",
+    description: "Popular Nike Air shoes for comfort and style.",
+    layoutType: "card"
+  },
+  {
+    id: "5",
+    slug: "adidas-runner",
+    name: "Adidas Runner",
+    price: 1800,
+    images: ["/adidas.jpg"],
+    category: "shoes",
+    description: "Durable Adidas running shoes.",
+    layoutType: "card"
   }
 ];
 
+// functions
 export const getProducts = async (): Promise<Product[]> => {
-  // In a real app, this would fetch from an API
   return Promise.resolve(products);
 };
 
 export const getProductBySlug = async (slug: string): Promise<Product | undefined> => {
-  // In a real app, this would fetch from an API
   return Promise.resolve(products.find(product => product.slug === slug));
 };
 
-export const getProductsByCategory = async (category: string): Promise<Product[]> => {
-  // In a real app, this would fetch from an API
-  return Promise.resolve(products.filter(product => 
-    product.category.toLowerCase() === category.toLowerCase()
+export const getProductsByCategory = async (slug: string): Promise<Product[]> => {
+  return Promise.resolve(products.filter(product =>
+    product.category.toLowerCase() === slug.toLowerCase()
   ));
+};
+
+export const getCategoryBySlug = async (slug: string): Promise<Category | undefined> => {
+  return Promise.resolve(categories.find(c => c.slug.toLowerCase() === slug.toLowerCase()));
 };
